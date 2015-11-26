@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Getting started example",
-  "description": "This extension shows a Google Image search result for the current page",
+  "name": "Micropayment by MaGriMuc",
+  "description": "Zahlt 10 Cent per Click von Ihrem Guthaben an Betreiber der Webseite.",
   "version": "1.0",
 
   "browser_action": {
