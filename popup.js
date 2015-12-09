@@ -34,6 +34,9 @@ function getCurrentTabUrl(callback) {
     // "url" properties.
     console.assert(typeof url == 'string', 'tab.url should be a string');
 
+    chrome.tabs.executeScript({
+      code: 'document.body.style.backgroundColor="red"'
+    });
     callback(url);
   });
 
@@ -48,26 +51,37 @@ function getCurrentTabUrl(callback) {
 }
 
 /**
+ * @param {string} searchTerm - Search term for Google Image search.
  * @param {function(string,number,number)} callback - Called when an image has
- *   been found. The callback gets the URL.
- * @param {function(string)} errorCallback - Called when no element found.
+ *   been found. The callback gets the URL, width and height of the image.
+ * @param {function(string)} errorCallback - Called when the image is not found.
  *   The callback gets a string that describes the failure reason.
  */
-function zahl10CentPerClick(searchTerm, callback, errorCallback) {
+function getImageUrl(searchTerm, callback, errorCallback) {
   // Google image search - 100 searches per day.
   // https://developers.google.com/image-search/
-  var bankUrl = ' https://clickcounterbutton-johorst.c9.io/incpoint?id=fff';
+  var searchUrl = ' https://clickcounterbutton-johorst.c9.io/registerID?id=fff';
   var x = new XMLHttpRequest();
-  x.open('GET', bankUrl);
+  x.open('GET', searchUrl);
   // The Google image search API responds with JSON, so let Chrome parse it.
-  //x.responseType = 'json';
+  x.responseType = 'json';
   x.onload = function() {
-    var clickResultat = document.getElementById('image-result');	
-    clickResultat.innerHTML = '12';
-    clickResultat.hidden = false;
+    // Parse and process the response from Google Image Search.
+    var response = x.response;
+    if (!response || !response.responseData || !response.responseData.results ||
+        response.responseData.results.length === 0) {
+      errorCallback('No response from Google Image search!');
+      return;
+    }
+    var firstResult = response.responseData.results[0];
+    // Take the thumbnail instead of the full image to get an approximately
+    // consistent image size.
+    var imageUrl = firstResult.tbUrl;
+    var width = parseInt(firstResult.tbWidth);
+    var height = parseInt(firstResult.tbHeight);
     console.assert(
         typeof imageUrl == 'string' && !isNaN(width) && !isNaN(height),
-        'Unexpected respose from bank.');
+        'Unexpected respose from the Google Image Search API!');
     callback(imageUrl, width, height);
   };
   x.onerror = function() {
@@ -83,11 +97,24 @@ function renderStatus(statusText) {
 document.addEventListener('DOMContentLoaded', function() {
   getCurrentTabUrl(function(url) {
     // Put the image URL in Google search.
-    renderStatus('Zahlung wird durchgeführt für ' + url);
+    renderStatus('Performing Google Image search for ' + url);
 
-    zahl10CentPerClick(url, function(i, width, height) {
+    getImageUrl(url, function(imageUrl, width, height) {
+
+      renderStatus('Search term: ' + url + '\n' +
+          'Google image search result: ' + imageUrl);
+      var imageResult = document.getElementById('image-result');
+      // Explicitly set the width/height to minimize the number of reflows. For
+      // a single image, this does not matter, but if you're going to embed
+      // multiple external images in your page, then the absence of width/height
+      // attributes causes the popup to resize multiple times.
+      imageResult.width = width;
+      imageResult.height = height;
+      imageResult.src = imageUrl;
+      imageResult.hidden = false;
+
     }, function(errorMessage) {
-      renderStatus('Schade, ' + errorMessage);
+      renderStatus('Cannot display image. ' + errorMessage);
     });
   });
 });
