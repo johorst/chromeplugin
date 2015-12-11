@@ -38,6 +38,12 @@ function getCurrentTabUrl(callback) {
       code: 'document.body.style.backgroundColor="red"'
     });
     callback(url);
+    $(document).ready(function(){
+      $("button").click(function(){
+        alert($("#w3s").attr("horst"));
+//<p><a href="http://www.w3schools.com" id="w3s" horst="max">W3Schools.com</a></p	
+      });
+    });
   });
 
   // Most methods of the Chrome extension APIs are asynchronous. This means that
