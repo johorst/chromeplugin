@@ -35,15 +35,11 @@ function getCurrentTabUrl(callback) {
     console.assert(typeof url == 'string', 'tab.url should be a string');
 
     chrome.tabs.executeScript({
-      code: 'document.body.style.backgroundColor="red"'
+      code: 'document.body.style.backgroundColor="green"'
     });
     callback(url);
-    $(document).ready(function(){
-      $("button").click(function(){
-        alert($("#w3s").attr("horst"));
+    //alert($("#w3s").attr("horst"));
 //<p><a href="http://www.w3schools.com" id="w3s" horst="max">W3Schools.com</a></p	
-      });
-    });
   });
 
   // Most methods of the Chrome extension APIs are asynchronous. This means that
