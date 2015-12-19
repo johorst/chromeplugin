@@ -34,12 +34,15 @@ function getCurrentTabUrl(callback) {
     // "url" properties.
     console.assert(typeof url == 'string', 'tab.url should be a string');
 
+    var rt = "";
     chrome.tabs.executeScript({
       code: 'document.body.style.backgroundColor="green"'
     });
     callback(url);
-    //alert($("#w3s").attr("horst"));
-//<p><a href="http://www.w3schools.com" id="w3s" horst="max">W3Schools.com</a></p	
+	chrome.tabs.executeScript(null, { file: "jquery-1.11.3.min.js" }, function() {
+		chrome.tabs.executeScript(null, { code: 'alert("Konto Nr. " + $("#mgm_id").attr("mgm_kto"))' });
+	});
+	//<div id="mgm_id" mgm_kto="6">
   });
 
   // Most methods of the Chrome extension APIs are asynchronous. This means that
