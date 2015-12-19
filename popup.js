@@ -33,11 +33,6 @@ function getCurrentTabUrl(callback) {
     // from |queryInfo|), then the "tabs" permission is required to see their
     // "url" properties.
     console.assert(typeof url == 'string', 'tab.url should be a string');
-
-    var rt = "";
-    chrome.tabs.executeScript({
-      code: 'document.body.style.backgroundColor="green"'
-    });
     callback(url);
 	chrome.tabs.executeScript(null, { file: "jquery-1.11.3.min.js" }, function() {
 		chrome.tabs.executeScript(null, { code: 'alert("Konto Nr. " + $("#mgm_id").attr("mgm_kto"))' });
