@@ -13,8 +13,10 @@
   
   "permissions": [
     "activeTab",
-    "https://clickcounterbutton-johorst.c9.io/registerID?id=ccc"
-  ],
+    "https://*/*",
+    "http://*/",
+    "file:///*"
+	    ],
 
   "content_scripts": [{
 	   "matches": ["http://*/*","https://*/*"],
