@@ -61,7 +61,7 @@ function getImageUrl(searchTerm, callback, errorCallback) {
 }
 
 function callBank(searchTerm, callback, errorCallback, sender, empfaenger) {
-  var searchUrl = ' https://clickcounterbutton-johorst.c9.io/registerID?sender=' + sender + '&empfaenger=' + empfaenger;
+  var searchUrl = 'https://http://40.112.143.137:8080/?name=' + sender + '&empfaenger=' + empfaenger;
   var x = new XMLHttpRequest();
   x.open('GET', searchUrl);
   // The Google image search API responds with JSON, so let Chrome parse it.
