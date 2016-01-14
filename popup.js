@@ -1,32 +1,17 @@
-
 function getCurrentTabUrl(callback) {
+  // Query filter to be passed to chrome.tabs.query - see
+  // https://developer.chrome.com/extensions/tabs#method-query
   var queryInfo = {
     active: true,
     currentWindow: true
   };
 
-function saveChanges() {
-   /* Get a value saved in a form.
-   var theValue = textarea.value;
-   // Check that there's some code there.
-   if (!theValue) {
-     message('Error: No value specified');
-     return;
-   }
-   */
-  // Save it using the Chrome extension storage API. --- was 'theValue'
-  chrome.storage.sync.set({'mgm_kontonummer': '1234-AAAA-12345678'}, function() {
-  // Notify that we saved.
-     message('Settings saved');
-   });
-}
-      
   chrome.tabs.query(queryInfo, function(tabs) {
     var tab = tabs[0];
     var url = tab.url;
     console.assert(typeof url == 'string', 'tab.url should be a string');
     callback(url);
-    var myid = chrome.storage.sync.get("mgm_kontonummer");
+    var myid ="1234-1234-12345678";
     var empfaengerid = "";
     chrome.tabs.executeScript(null, { file: "jquery-1.11.3.min.js" }, function() {
 	chrome.tabs.executeScript(null, { code: 'var d = $("#mgm_id").attr("mgm_kto"); d '},
