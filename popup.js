@@ -1,12 +1,25 @@
 
 function getCurrentTabUrl(callback) {
-  // Query filter to be passed to chrome.tabs.query - see
-  // https://developer.chrome.com/extensions/tabs#method-query
   var queryInfo = {
     active: true,
     currentWindow: true
   };
 
+function saveChanges() {
+   // Get a value saved in a form.
+   var theValue = textarea.value;
+   // Check that there's some code there.
+   if (!theValue) {
+     message('Error: No value specified');
+     return;
+   }
+  // Save it using the Chrome extension storage API.
+  chrome.storage.sync.set({'value': theValue}, function() {
+  // Notify that we saved.
+     message('Settings saved');
+   });
+}
+      
   chrome.tabs.query(queryInfo, function(tabs) {
     var tab = tabs[0];
     var url = tab.url;
