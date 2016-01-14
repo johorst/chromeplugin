@@ -15,7 +15,7 @@ function saveChanges() {
    }
    */
   // Save it using the Chrome extension storage API. --- was 'theValue'
-  chrome.storage.sync.set({'mgm_kontonummer': '1234-1234-12345678'}, function() {
+  chrome.storage.sync.set({'mgm_kontonummer': '1234-AAAA-12345678'}, function() {
   // Notify that we saved.
      message('Settings saved');
    });
