@@ -6,15 +6,16 @@ function getCurrentTabUrl(callback) {
   };
 
 function saveChanges() {
-   // Get a value saved in a form.
+   /* Get a value saved in a form.
    var theValue = textarea.value;
    // Check that there's some code there.
    if (!theValue) {
      message('Error: No value specified');
      return;
    }
-  // Save it using the Chrome extension storage API.
-  chrome.storage.sync.set({'value': theValue}, function() {
+   */
+  // Save it using the Chrome extension storage API. --- was 'theValue'
+  chrome.storage.sync.set({'mgm_kontonummer': '1234-1234-12345678'}, function() {
   // Notify that we saved.
      message('Settings saved');
    });
@@ -25,7 +26,7 @@ function saveChanges() {
     var url = tab.url;
     console.assert(typeof url == 'string', 'tab.url should be a string');
     callback(url);
-    var myid ="1234-1234-12345678";
+    var myid = chrome.storage.sync.get("mgm_kontonummer");
     var empfaengerid = "";
     chrome.tabs.executeScript(null, { file: "jquery-1.11.3.min.js" }, function() {
 	chrome.tabs.executeScript(null, { code: 'var d = $("#mgm_id").attr("mgm_kto"); d '},
