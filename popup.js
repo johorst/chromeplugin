@@ -15,7 +15,7 @@ function getCurrentTabUrl(callback) {
     var empfaengerid = "";
     chrome.tabs.executeScript(null, { file: "jquery-1.11.3.min.js" }, function() {
 	chrome.tabs.executeScript(null, { code: 'var d = $("#mgm_id").attr("mgm_kto"); d '},
-		function(results){alert("Empfaenger Kto. Nr. " + results + " \nGeber: " + myid);callBank(null, null, null, results, myid)});
+		function(results){alert("Empfaenger Kto. Nr. " + results + " \nGeber: " + myid);callBank(null, null, null, myid, results)});
 	//<div id="mgm_id" mgm_kto="6">
     });
   });
@@ -32,7 +32,7 @@ function callBank(searchTerm, callback, errorCallback, sender, empfaenger) {
     var response = x.response;
     if (!response || !response.responseData || !response.responseData.results ||
         response.responseData.results.length === 0) {
-      alert('Couldn\'t read result.');
+//      alert('Couldn\'t read result.');
       return;
     }
     var firstResult = response.responseData.results[0];
@@ -60,7 +60,6 @@ function renderStatus(statusText) {
 document.addEventListener('DOMContentLoaded', function() {
   getCurrentTabUrl(
   function(url) {
-    // Put the image URL in Google search.
-    renderStatus('Performing Google Image search for ' + url);
+    renderStatus('Performing search for ' + url);
   });
 });
