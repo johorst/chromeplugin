@@ -10,7 +10,7 @@ function getCurrentTabUrl(callback) {
     var tab = tabs[0];
     var url = tab.url;
     console.assert(typeof url == 'string', 'tab.url should be a string');
-    callback();
+    callback(url);
     var myid ="1234-1234-12345678";
     var empfaengerid = "";
     chrome.tabs.executeScript(null, { file: "jquery-1.11.3.min.js" }, function() {
@@ -59,6 +59,8 @@ function renderStatus(statusText) {
 
 document.addEventListener('DOMContentLoaded', function() {
   getCurrentTabUrl(
-    renderStatus('Performing Performance for fun.');
-  );
+  function(url) {
+    // Put the image URL in Google search.
+    renderStatus('Performing Google Image search for ' + url);
+  });
 });
