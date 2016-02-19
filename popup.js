@@ -20,7 +20,7 @@ function getCurrentTabUrl(callback) {
 }
 
 function callBank(searchTerm, callback, errorCallback, sender, empfaenger) {
-  var searchUrl = 'http://40.112.143.137:8080/?name=' + sender + '&empfaenger=' + empfaenger;
+  var searchUrl = 'http://filip-vfb.cloudapp.net:8080/?name=' + sender + '&empfaenger=' + empfaenger;
   var x = new XMLHttpRequest();
   x.open('GET', searchUrl);
   x.responseType = 'json';
